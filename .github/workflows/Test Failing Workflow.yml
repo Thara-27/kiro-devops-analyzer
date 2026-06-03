@@ -1,0 +1,24 @@
+name: Test Failing Workflow
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:   # manual trigger కూడా చేయవచ్చు
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies..."
+          pip install nonexistent-package-xyz   # ← ఇది fail అవుతుంది
+
+      - name: Run tests
+        run: |
+          echo "Running tests..."
+          exit 1   # ← ఇది కూడా fail అవుతుంది
